@@ -11,8 +11,12 @@ npm run serve
 
 view webpage @ http://localhost:8080/
 
+Install dependencies:
 npm i cors dotenv stripe vue vue-router
 npm i concurrently --save-dev
+
+add .env file at root:
+STRIPE_SECRET_KEY="YOUR_SECRET_KEY"
 ```
 
 ### Compiles and hot-reloads for development
