@@ -11,7 +11,7 @@ app.use(
   })
 );
 //DEPLOYMENT TO HOSTING:
-//when deploying to render, all instances of "http://localhost:3000" --> https://cult-of-pizza.onrender.com
+//when deploying to render, all instances of "http://localhost:8080" --> https://cult-of-pizza-vue.onrender.com
 //enter STRIPE_SECRET_KEY in deployment step --> no quotes around secret key
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
@@ -32,8 +32,8 @@ app.post("/checkout", async (req, res) => {
         },
         quantity: item.quantity,
       })),
-      success_url: `http://localhost:8081/success`,
-      cancel_url: `http://localhost:8081`,
+      success_url: `https://cult-of-pizza-vue.onrender.com/success`,
+      cancel_url: `https://cult-of-pizza-vue.onrender.com`,
     });
     res.json({ url: session.url });
   } catch (e) {
@@ -43,5 +43,5 @@ app.post("/checkout", async (req, res) => {
 });
 
 app.listen(8080, () => {
-  console.log("Server is running on http://localhost:8080");
+  console.log("Server is running on https://cult-of-pizza-vue.onrender.com");
 });

@@ -181,7 +181,7 @@ export default {
       console.log(orderItems);
 
       // Continue with the rest of your code
-      fetch("http://localhost:8080/checkout", {
+      fetch("https://cult-of-pizza-vue.onrender.com/checkout", {
   method: "POST",
   headers: {
     "Content-Type": "application/json"
