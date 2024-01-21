@@ -2,10 +2,8 @@ require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const express = require("express");
-const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");  // Import the path module
-
 const app = express();
 
 // Define the path for serving static files
@@ -13,12 +11,12 @@ const staticPath = path.join(__dirname, '/app/views/');
 app.use(express.static(staticPath));
 
 var corsOptions = {
-  origin: "https://cult-of-pizza.onrender.com"
+  origin: "https://cult-of-pizza-vue.onrender.com"
 };
 
 app.use(cors(corsOptions));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 
@@ -43,8 +41,8 @@ app.post("/checkout", async (req, res) => {
         },
         quantity: item.quantity,
       })),
-      success_url: `https://cult-of-pizza.onrender.com/success`, // Adjust the URL if needed
-      cancel_url: `https://cult-of-pizza.onrender.com`, // Adjust the URL if needed
+      success_url: `https://cult-of-pizza-vue.onrender.com/success`, // Adjust the URL if needed
+      cancel_url: `https://cult-of-pizza-vue.onrender.com`, // Adjust the URL if needed
     });
     res.json({ url: session.url });
   } catch (e) {
