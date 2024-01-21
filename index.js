@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const express = require("express");
+const bodyParser = require('body-parser');
 const app = express();
 const cors = require("cors");
 app.use(express.json());
@@ -11,7 +12,7 @@ app.use(
   })
 );
 //DEPLOYMENT TO HOSTING:
-//when deploying to render, all instances of "http://localhost:8080" --> https://cult-of-pizza-vue.onrender.com
+//when deploying to render, all instances in app.post("/checkout" "http://localhost:8081"in index.js --> https://cult-of-pizza-vue.onrender.com
 //enter STRIPE_SECRET_KEY in deployment step --> no quotes around secret key
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
@@ -43,5 +44,5 @@ app.post("/checkout", async (req, res) => {
 });
 
 app.listen(8080, () => {
-  console.log("Server is running on https://cult-of-pizza-vue.onrender.com");
+  console.log("Server is running.");
 });

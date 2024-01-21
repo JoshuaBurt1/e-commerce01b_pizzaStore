@@ -1,9 +1,11 @@
 {
+  "$schema": "./jsconfig.json", // Change this line
   "compilerOptions": {
     "target": "es5",
     "module": "esnext",
     "baseUrl": "./",
     "moduleResolution": "node",
+    "types": ["node", "body-parser"],
     "paths": {
       "@/*": [
         "src/*"

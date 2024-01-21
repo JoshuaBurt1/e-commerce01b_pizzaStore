@@ -61,8 +61,6 @@
 export default {
   data() {
     return {
-      buttonColor: 'royalblue',
-      priceColor: 'white',
       price: "",
       items: [0, 0, 0, 0],
       toppingArray: [],
@@ -171,36 +169,36 @@ export default {
     this.items[3], // side cost
   ];
 
-      // Map the pizzaCostArray elements to the correct orderItems format
-      const orderItems = [
-        { id: 1, name: "Pizza Size", priceInCents: pizzaCostArray[0] * 100, quantity: 1 },
-        { id: 2, name: "Topping", priceInCents: pizzaCostArray[1] * 100, quantity: 1 },
-        { id: 3, name: "Dip", priceInCents: pizzaCostArray[2] * 100, quantity: 1 },
-        { id: 4, name: "Side", priceInCents: pizzaCostArray[3] * 100, quantity: 1 },
-      ];
-      console.log(orderItems);
+  // Map the pizzaCostArray elements to the correct orderItems format
+  const orderItems = [
+    { id: 1, name: "Pizza Size", priceInCents: pizzaCostArray[0] * 100, quantity: 1 },
+    { id: 2, name: "Topping", priceInCents: pizzaCostArray[1] * 100, quantity: 1 },
+    { id: 3, name: "Dip", priceInCents: pizzaCostArray[2] * 100, quantity: 1 },
+    { id: 4, name: "Side", priceInCents: pizzaCostArray[3] * 100, quantity: 1 },
+  ];
+  console.log(orderItems);
 
-      // Continue with the rest of your code
-      fetch("https://cult-of-pizza-vue.onrender.com/checkout", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    items: orderItems
+  // Continue with the rest of your code; otherwise: http://localhost:8080
+  fetch("https://cult-of-pizza-vue.onrender.com/checkout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      items: orderItems
+    })
   })
-})
-.then(res => {
-  if (res.ok) return res.json();
-  return res.json().then(json => Promise.reject(json));
-})
-.then(({url}) => {
-  window.location = url;
-})
-.catch(e => {
-  console.error("Client-side error:", e);
-});
-  },
+  .then(res => {
+    if (res.ok) return res.json();
+    return res.json().then(json => Promise.reject(json));
+  })
+  .then(({url}) => {
+    window.location = url;
+  })
+  .catch(e => {
+    console.error("Client-side error:", e);
+    });
+},
     clearOrder() {
       this.$refs.toppingCBs.forEach((checkBox) => {
         checkBox.checked = false;
@@ -211,7 +209,6 @@ export default {
   },
 };
 </script>
-
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>

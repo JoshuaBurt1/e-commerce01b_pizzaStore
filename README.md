@@ -9,7 +9,7 @@ vue create YOUR_APP_NAME
 cd YOUR_APP_NAME
 npm run serve
 
-view webpage @ http://localhost:8080/
+view webpage @ http://localhost:8081/
 
 Install dependencies:
 npm i cors dotenv stripe vue vue-router
