@@ -2,6 +2,15 @@
 
 ## Project setup
 ```
+Install node.js
+Open command prompt
+npm install -g @vue/cli
+vue create YOUR_APP_NAME
+cd YOUR_APP_NAME
+npm run serve
+
+view webpage @ http://localhost:8080/
+
 npm i cors dotenv stripe vue vue-router
 npm i concurrently --save-dev
 ```
