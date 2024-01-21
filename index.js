@@ -1,23 +1,33 @@
 require("dotenv").config();
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const express = require("express");
-const bodyParser = require('body-parser');
-const app = express();
+const bodyParser = require("body-parser");
 const cors = require("cors");
+const path = require("path");  // Import the path module
+
+const app = express();
+
+// Define the path for serving static files
+const staticPath = path.join(__dirname, '/app/views/');
+app.use(express.static(staticPath));
+
+var corsOptions = {
+  origin: "https://cult-of-pizza.onrender.com"
+};
+
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(express.json());
-app.use(express.static("public"));
-app.use(
-  cors({
-    origin: "*", // Allow all origins during development
-  })
-);
-//DEPLOYMENT TO HOSTING:
-//when deploying to render, all instances in app.post("/checkout" "http://localhost:8081"in index.js --> https://cult-of-pizza-vue.onrender.com
-//enter STRIPE_SECRET_KEY in deployment step --> no quotes around secret key
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-console.log(stripe);
+// Define the root route to serve the index.html
+app.get('/', function (req, res) {
+  res.sendFile(path.join(staticPath, "index.html"));
+});
 
+// Define a route to handle the POST request to /checkout
 app.post("/checkout", async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.create({
@@ -27,14 +37,14 @@ app.post("/checkout", async (req, res) => {
         price_data: {
           currency: "usd",
           product_data: {
-            name: item.name, // Assuming your client-side sends the name
+            name: item.name,
           },
           unit_amount: item.priceInCents,
         },
         quantity: item.quantity,
       })),
-      success_url: `https://cult-of-pizza-vue.onrender.com/success`,
-      cancel_url: `https://cult-of-pizza-vue.onrender.com`,
+      success_url: `https://cult-of-pizza.onrender.com/success`, // Adjust the URL if needed
+      cancel_url: `https://cult-of-pizza.onrender.com`, // Adjust the URL if needed
     });
     res.json({ url: session.url });
   } catch (e) {
@@ -43,6 +53,12 @@ app.post("/checkout", async (req, res) => {
   }
 });
 
-app.listen(8080, () => {
-  console.log("Server is running.");
+// Define a route that will handle all non-API routes and serve the Vue app
+app.get("*", (req, res) => {
+  res.sendFile(path.join(staticPath, "index.html"));
+});
+
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
